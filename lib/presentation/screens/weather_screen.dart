@@ -17,10 +17,20 @@ class WeatherScreen extends StatefulWidget {
 
 class _WeatherScreenState extends State<WeatherScreen> {
 
+  List<String> _cityList = ['London','Colombo','Amterdam'];
+  String? _selectedCity;
+
   @override
   void initState() {
     super.initState();
-    context.read<WeatherBloc>().add(WeatherFetched());
+    _selectedCity = _cityList[0];
+    fertchWeather();
+  }
+
+  void fertchWeather(){
+    if(_selectedCity != null) {
+      context.read<WeatherBloc>().add(WeatherFetched(city: _selectedCity!));
+    }
   }
 
   @override
@@ -35,9 +45,24 @@ class _WeatherScreenState extends State<WeatherScreen> {
         ),
         centerTitle: true,
         actions: [
+          DropdownButton<String>(
+            value: _selectedCity,
+            items: _cityList.map((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+            onChanged: (value) {
+              setState(() {
+                _selectedCity = value;
+              });
+              fertchWeather();
+            },
+          ),
           IconButton(
             onPressed: () {
-              context.read<WeatherBloc>().add(WeatherFetched());
+              fertchWeather();
             },
             icon: const Icon(Icons.refresh),
           ),

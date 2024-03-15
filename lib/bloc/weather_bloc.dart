@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
@@ -18,7 +17,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   void _getCurrentWeather(WeatherFetched event, Emitter<WeatherState> emmit)async{
     emit(WeatherLoading());
     try{
-      final weather = await weatherRepository.getCurrentWeather();
+      final weather = await weatherRepository.getCurrentWeather(event.city);
       emit(WeatherSuccess(weatherModelList: weather));
     }catch(e){
       emit(WeatherFailure(e.toString()));
