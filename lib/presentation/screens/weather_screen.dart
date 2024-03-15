@@ -17,7 +17,7 @@ class WeatherScreen extends StatefulWidget {
 
 class _WeatherScreenState extends State<WeatherScreen> {
 
-  List<String> _cityList = ['London','Colombo','Amterdam'];
+  List<String> _cityList = ['London','Colombo','Amsterdam','New York','Sydney'];
   String? _selectedCity;
 
   @override
